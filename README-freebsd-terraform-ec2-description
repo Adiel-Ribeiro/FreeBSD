@@ -1,0 +1,42 @@
+########################################################################################################################################
+                                        From TCP/IP to POSIX, FreeBSD always innovate! 
+                                   It servers the biggest and busiest sites on internet since 1999. 
+                              FreeBSD is lightweight, robust, stable and very, very secure (CC/B3 EAL4). 
+                              It has some exclusive technologies for perfomance, stability and security. 
+                                 More details: https://www.freebsd.org/advocacy/whyusefreebsd.html
+########################################################################################################################################
+                         This template launches official FreeBSD AMI from AWS Market Place, currently 12.2. 
+                        It uses IaC trought Terraform to implement customizations to the default image. 
+                               The result is a high secure FreeBSD server on AWS EC2 by default. 
+########################################################################################################################################
+                           The first enhancements are about the instance launch, it's launched in a specific VPC,
+                        with a specific subnet, some specific configurations and so on, avoiding human erros and 
+                      ensuring that your AWS EC2 is running in the better possible way.
+      More details can be found here: https://raw.githubusercontent.com/Adiel-Ribeiro/Terraform/master/terraform-ec2-description
+#########################################################################################################################################
+             Besides the initial steps, this template goes above and beyond, it also configures the Operating System.
+                This system allows SSH access, on non default port and all security options enabled by default. 
+               It also has a custom kernel, wich disable everything unnecessary (services, proccess and drivers). 
+                                   This hardened kernel is also optimized for AWS EC2.
+         There are various other secutity configurations on system level to avoid misconfigurations or vulnerabilities. 
+########################################################################################################################################
+                    I suggest that you read all related files in this repository to understand all the changes. 
+                            For in-depth details, please read init.sh script and freebsd-terraform-ec2.tf.
+ There will be situations and scenarios that you should change some aspects from freebsd-terraform-ec2.tf, init.sh or even sshd_config.
+                                              Fell free to do this and go ahead.
+########################################################################################################################################
+*********************************************************ATTENTION**********************************************************************
+                         Your passwords (root and ec2-user) are your firt instance ipv4 address. 
+                               Remember to change them and configure sudo for daily tasks.
+                  After the launch proccess, don't be worried about the error message from Terraform: 
+   Error: error executing "/tmp/terraform_1730798565.sh": wait: remote command exited without exit status or exit signal
+       It's because the reboot action on your instance, you can just procceed and logon normally to your instance, enjoy!
+########################################################################################################################################
+
+                IF YOU DON'T USE SERVERLESS, START BUILDING YOUR APPLICATIONS IN THE MOST SECURE AND EFFECTIVE WAY!
+
+########################################################################################################################################
+
+                     I look forward you enjoy my work, comments, doubts and more, please contact me, thanks. 
+
+########################################################################################################################################
