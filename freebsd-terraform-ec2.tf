@@ -18,6 +18,14 @@ resource "aws_instance" "freebsd"       {
  monitoring                             =      "0" 
  tenancy                                =      "default"
 
+ebs_block_device                        {
+ device_name                            = "/dev/sdf"
+ volume_size                            = 15
+ volume_type                            = "gp2"
+ delete_on_termination                  = true
+ encrypted                              = false
+}
+
 provisioner "file"                      {
     source                              =      "/data/it/terraform/freebsd/asot/init.sh"
     destination                         =      "/tmp/init.sh"
@@ -56,15 +64,4 @@ connection                              {
  port                                   = "22"
 }
 
-}
-
-resource "aws_ebs_volume" "freebsd"     {
- availability_zone                      = "us-east-1a"
- size                                   = 15
-}
-
-resource "aws_volume_attachment" "ebs_att" {
- device_name                               = "/dev/sdf"
- volume_id                                 = aws_ebs_volume.freebsd.id
- instance_id                               = aws_instance.freebsd.id
 }
