@@ -58,3 +58,13 @@ connection                              {
 
 }
 
+resource "aws_ebs_volume" "freebsd"     {
+ availability_zone                      = "us-east-1a"
+ size                                   = 15
+}
+
+resource "aws_volume_attachment" "ebs_att" {
+ device_name                               = "/dev/sdf"
+ volume_id                                 = aws_ebs_volume.freebsd.id
+ instance_id                               = aws_instance.freebsd.id
+}
