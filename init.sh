@@ -73,7 +73,7 @@ su -m root -c "/bin/chmod 600 /mnt/log/security"
 su -m root -c "umount /mnt" 
 ###########################################################################
 su -m root -c "echo /dev/nvd1p1 /usr/local ufs rw 1 1 >> /etc/fstab"
-su -m root -c "echo /dev/nvd1p2 /home ufs rw,noexec 1 1 >> /etc/fstab"
+su -m root -c "echo /dev/nvd1p2 /home ufs rw 1 1 >> /etc/fstab"
 su -m root -c "echo /dev/nvd1p3 /var ufs rw,noexec 1 1 >> /etc/fstab"
 su -m root -c "echo /dev/nvd1p4 /var/log ufs rw,noexec 1 1 >> /etc/fstab"
 su -m root -c "echo /dev/nvd1p5 /tmp ufs rw,noexec 1 1 >> /etc/fstab"
