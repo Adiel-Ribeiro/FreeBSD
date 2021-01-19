@@ -59,7 +59,7 @@ IgnoreUserKnownHosts yes
 IgnoreRhosts yes
 
 # Change to yes to enable built-in password authentication.
-PasswordAuthentication yes
+PasswordAuthentication no
 PermitEmptyPasswords no
 
 # Change to no to disable PAM authentication

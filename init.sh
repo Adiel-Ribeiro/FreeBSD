@@ -7,14 +7,13 @@ su -m root -c "echo umask 077 >> /home/ec2-user/.shrc"
 su -m root -c "echo umask 077 >> /root/.cshrc"
 #######################################################################
 su -m root -c "/usr/sbin/pw groupadd ssh"
-su -m root -c "/usr/sbin/pw usermod ec2-user -G ssh,wheel"
+su -m root -c "/usr/sbin/pw groupadd sudo"
+su -m root -c "/usr/sbin/pw usermod ec2-user -G ssh,wheel,sudo"
 ###############################################################################################################
 /usr/bin/fetch -q --no-verify-peer https://raw.githubusercontent.com/Adiel-Ribeiro/FreeBSD/master/sshd_config
-/usr/bin/fetch http://169.254.169.254/latest/meta-data/local-ipv4
 /usr/bin/fetch http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key
 ###############################################################################################################
 su -m root -c "/bin/cat openssh-key >> /usr/home/ec2-user/.ssh/authorized_keys"
-su -m root -c "/bin/cat local-ipv4 | /usr/sbin/pw mod user ec2-user -h 0"
 #########################################################################################################
 su -m root -c "/bin/mv /etc/ssh/sshd_config /etc/ssh/sshd_config.bkp"
 su -m root -c "/bin/mv sshd_config /etc/ssh/sshd_config"
@@ -56,6 +55,7 @@ su -m root -c "/sbin/newfs -j -U /dev/nvd1p4"
 su -m root -c "/sbin/newfs -j -U /dev/nvd1p5"
 #########################################################################
 su -m root -c "/usr/sbin/pkg install -y sudo"
+su -m root -c 'echo "%sudo ALL= ( ALL:ALL ) NOPASSWD: ALL" >> /usr/local/etc/sudoers'
 #############################################################################################
 su -m root -c "/sbin/mount /dev/nvd1p1 /mnt"
 su -m root -c "/bin/cp -Rp /usr/local/ /mnt/"
@@ -64,16 +64,16 @@ su -m root -c "/sbin/mount /dev/nvd1p2 /mnt"
 su -m root -c "/bin/cp -Rp /home/ /mnt/"
 su -m root -c "/bin/cp -Rp /home/ec2-user/.ssh/ /mnt/ec2-user/.ssh"
 su -m root -c "umount /mnt" 
+su -m root -c "/bin/chmod 600 /var/log/auth.log"
+su -m root -c "/bin/chmod 600 /var/log/security"
+su -m root -c "/bin/chflags sappend /var/log/auth.log"
+su -m root -c "/bin/chflags sappend /var/log/security"
 su -m root -c "/sbin/mount /dev/nvd1p3 /mnt"
 su -m root -c "/bin/cp -Rp /var/ /mnt/"
-su -m root -c "/bin/chflags sappend /mnt/log/auth.log"
-su -m root -c "/bin/chflags sappend /mnt/log/security"
-su -m root -c "/bin/chmod 600 /mnt/log/auth.log"
-su -m root -c "/bin/chmod 600 /mnt/log/security" 
 su -m root -c "umount /mnt" 
 ###########################################################################
 su -m root -c "echo /dev/nvd1p1 /usr/local ufs rw 1 1 >> /etc/fstab"
-su -m root -c "echo /dev/nvd1p2 /home ufs rw 1 1 >> /etc/fstab"
+su -m root -c "echo /dev/nvd1p2 /home ufs rw,nosuid 1 1 >> /etc/fstab"
 su -m root -c "echo /dev/nvd1p3 /var ufs rw,noexec 1 1 >> /etc/fstab"
 su -m root -c "echo /dev/nvd1p4 /var/log ufs rw,noexec 1 1 >> /etc/fstab"
 su -m root -c "echo /dev/nvd1p5 /tmp ufs rw,noexec 1 1 >> /etc/fstab"
@@ -85,5 +85,5 @@ su -m root -c "/bin/chflags -R schg /usr/bin"
 su -m root -c "/bin/chflags -R schg /usr/sbin"
 su -m root -c "/bin/chflags -R schg /usr/lib*"
 #######################################################################################
-su -m root -c "/bin/cat local-ipv4 | /usr/sbin/pw mod user root -h 0 && /sbin/reboot"
+su -m root -c "/sbin/reboot"
 #######################################################################################

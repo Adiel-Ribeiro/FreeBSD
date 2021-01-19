@@ -26,8 +26,7 @@
                                               Fell free to do this and go ahead.
 ########################################################################################################################################
 *********************************************************ATTENTION**********************************************************************
-                         Your passwords (root and ec2-user) are your firt instance ipv4 address. 
-                               Remember to change them and configure sudo for daily tasks.
+                                             Please, use sudo for daily tasks!!
                   After the launch proccess, don't be worried about the error message from Terraform: 
    Error: error executing "/tmp/terraform_1730798565.sh": wait: remote command exited without exit status or exit signal
        It's because the reboot action on your instance, you can just procceed and logon normally to your instance, enjoy!
